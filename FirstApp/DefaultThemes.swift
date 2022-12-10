@@ -11,7 +11,7 @@ struct DefaultThemes {
     
     static var moons = MemoryGame<String>.Theme(name: "Phases of Moon",
                                                 emojiKit: ThemeContent.phasesOfMoon,
-                                                numberOfPairs: 4,
+                                                numberOfPairs: 8,
                                                 color: .black)
     
     static var hearts = MemoryGame<String>.Theme(name: "Hearts",

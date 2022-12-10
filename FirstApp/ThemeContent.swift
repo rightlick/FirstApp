@@ -9,7 +9,7 @@ import Foundation
 
 struct ThemeContent {
     
-    static let phasesOfMoon = ["🌚", "🌕", "🌖", "🌗",
+    static let phasesOfMoon = ["🌚", "🌚", "🌖", "🌗",
                                "🌑", "🌒", "🌓", "🌔"].shuffled()
     
     static let hearts = ["❤️", "🧡", "💛", "💚",
