@@ -13,7 +13,7 @@ struct ContentView : View {
     var body : some View {
         VStack {
             Text(EmojiMemoryGame.currentTheme.name).font(.largeTitle).fontWeight(.black)
-            Text("Score: \(EmojiMemoryGame.currentTheme.score)")
+            Text("Score: \(viewModel.score)")
                 .font(.title2)
                 
             

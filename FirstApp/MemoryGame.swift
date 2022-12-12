@@ -15,6 +15,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
+    var score: Int = 0
+    
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}),
            !cards[chosenIndex].isFaceUp,
@@ -26,16 +28,16 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
-                    EmojiMemoryGame.currentTheme.score += 2
+                    score += 2
                 } else {        //если контент на двух карточках не совпал
                 
                     //если первая открытая карточка уже переворачивалась до этого, то -1 балл
                     if cards[chosenIndex].wasShown {
-                        EmojiMemoryGame.currentTheme.score -= 1
+                        score -= 1
                     }
                     //если вторая открытая карточка уже переворачивалась до этого, то -1 балл
                     if cards[potentialMatchIndex].wasShown {
-                        EmojiMemoryGame.currentTheme.score -= 1
+                        score -= 1
                     }
                 }
                 cards[chosenIndex].wasShown = true             //этак карточка переворачивалась
@@ -78,6 +80,5 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var emojiKit: Array<String>
         var numberOfPairs: Int
         var color: Color
-        var score: Int //
     }
 }
