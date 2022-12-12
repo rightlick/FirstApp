@@ -8,155 +8,70 @@
 import SwiftUI
 
 struct ContentView : View {
-    var phasesOfMoon = ["🌚", "🌕", "🌖", "🌗",
-                        "🌑", "🌒", "🌓", "🌔"]
-    
-    var hearts = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍",
-                  "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "💖", "💝", "💘", "💞"]
-    
-    var animals = ["🦊", "🐼", "🐷", "🐻", "🐶", "🐱", "🐭", "🐹",
-                   "🐰", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮", "🐸", "🐥",
-                   "🐔", "🐧", "🦄", "🦉"]
-    
-    @State var currentCards: [String]
-    
-    @State var arrayCount = 3
-    
-    init(currentArray: [String]) {
-        self.currentCards = currentArray
-    }
+    @ObservedObject var viewModel: EmojiMemoryGame
     
     var body : some View {
         VStack {
-            Text("Memorize!").font(.title).fontWeight(.black).foregroundColor(Color.green)
+            Text(EmojiMemoryGame.currentTheme.name).font(.largeTitle).fontWeight(.black)
+            Text("Score: \(viewModel.score)")
+                .font(.title2)
+                
             
-            let items = [GridItem(.adaptive(minimum: 100))]
+            let items = [GridItem(.adaptive(minimum: 90))]
             
             ScrollView {
                 LazyVGrid(columns: items, spacing: 10) {
-                    ForEach(currentCards[0..<arrayCount], id: \.self) { card in
-                        CardView(content: card).aspectRatio(2/3, contentMode: .fit)
+                    ForEach(viewModel.cards) { card in
+                        CardView(card: card)
+                            .aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
                     }
                 }
             }
-            
-            Spacer()
-            
-            HStack {
-                remove
-                Spacer()
-                buttonMoon
-                Spacer()
-                buttonHearts
-                Spacer()
-                buttonAnimals
-                Spacer()
-                add
+            VStack {
+                Button(action: {
+                    viewModel.startNewGame()
+                }, label: {
+                    VStack {
+                        Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
+                        
+                        Text("New Game")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                }).font(.largeTitle)
             }
-            .font(.largeTitle)
         }
         .padding(.all)
-        .foregroundColor(.green)
-    }
-    
-    var buttonMoon: some View {
-        VStack {
-            Button(action: {
-                if arrayCount > phasesOfMoon.count {
-                    arrayCount = phasesOfMoon.count
-                }
-                currentCards = phasesOfMoon.shuffled()
-            }, label: {
-                Image(systemName: "moon.circle.fill")
-            })
-            
-            Text("Moons")
-                .font(.subheadline)
-        }
-    }
-    
-    var buttonHearts: some View {
-        VStack {
-            Button(action: {
-                if arrayCount > hearts.count {
-                    arrayCount = hearts.count
-                }
-                currentCards = hearts.shuffled()
-            }, label: {
-                Image(systemName: "heart.circle.fill")
-            })
-            
-            Text("Hearts")
-                .font(.subheadline)
-        }
-    }
-    
-    var buttonAnimals: some View {
-        VStack {
-            Button(action: {
-                if arrayCount > animals.count {
-                    arrayCount = animals.count
-                }
-                currentCards = animals.shuffled()
-            }, label: {
-                Image(systemName: "pawprint.circle.fill")
-            })
-            
-            Text("Animals")
-                .font(.subheadline)
-        }
-    }
-    
-    var remove: some View {
-        Button(action: {
-            if arrayCount > 1 {
-                arrayCount -= 1
-            }
-        }, label: {
-            Image(systemName: "minus.rectangle.portrait")
-        })
-    }
-    
-    var add: some View {
-        Button(action: {
-            if arrayCount < currentCards.count {
-                arrayCount += 1
-            }
-        }, label: {
-            Image(systemName: "plus.rectangle.portrait")
-        })
+        .foregroundColor(EmojiMemoryGame.currentTheme.color)
     }
 }
 
-
 struct CardView : View {
-    
-    @State var isFaceUp: Bool = true
-    var content : String
+    let card : MemoryGame<String>.Card
     
     var body : some View {
-        return ZStack(content: {
+        ZStack {
             let shape = RoundedRectangle(cornerRadius: 15)
-            if isFaceUp {
+            if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 5)
                 
-                Text(content).font(.largeTitle)
+                Text(card.content).font(.largeTitle)
+            } else if card.isMatched {
+                shape.opacity(0)
             } else {
                 shape.fill()
             }
-        })
-        .onTapGesture {
-            isFaceUp = !isFaceUp
         }
-        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let phasesOfMoon = ["🌚", "🌕", "🌖", "🌗",
-                            "🌑", "🌒", "🌓", "🌔"].shuffled()
-        ContentView(currentArray: phasesOfMoon)
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game)
     }
 }

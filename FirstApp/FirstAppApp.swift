@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct FirstAppApp: App {
+    let game = EmojiMemoryGame()
+    
     var body: some Scene {
         WindowGroup {
-            let phasesOfMoon = ["🌚", "🌕", "🌖", "🌗",
-                                "🌑", "🌒", "🌓", "🌔"].shuffled()
-            ContentView(currentArray: phasesOfMoon)
+            ContentView(viewModel: game)
         }
     }
 }
