@@ -12,12 +12,12 @@ struct ContentView : View {
     
     var body : some View {
         VStack {
-            Button("New Game") {
-                viewModel.startNewGame()
-            }.font(.largeTitle).foregroundColor(.blue)
-            Text(EmojiMemoryGame.currentTheme.name).font(.title).fontWeight(.black)
+            Text(EmojiMemoryGame.currentTheme.name).font(.largeTitle).fontWeight(.black)
+            Text("Score: \(EmojiMemoryGame.currentTheme.score)")
+                .font(.title2)
+                
             
-            let items = [GridItem(.adaptive(minimum: 100))]
+            let items = [GridItem(.adaptive(minimum: 90))]
             
             ScrollView {
                 LazyVGrid(columns: items, spacing: 10) {
@@ -30,8 +30,19 @@ struct ContentView : View {
                     }
                 }
             }
-            
-            Spacer()
+            VStack {
+                Button(action: {
+                    viewModel.startNewGame()
+                }, label: {
+                    VStack {
+                        Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
+                        
+                        Text("New Game")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                }).font(.largeTitle)
+            }
         }
         .padding(.all)
         .foregroundColor(EmojiMemoryGame.currentTheme.color)

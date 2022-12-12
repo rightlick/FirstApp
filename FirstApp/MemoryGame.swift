@@ -17,14 +17,30 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}),
-            !cards[chosenIndex].isFaceUp,
+           !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
         {
             if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
+                
+                                //если контент на двух карточках совпал
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    EmojiMemoryGame.currentTheme.score += 2
+                } else {        //если контент на двух карточках не совпал
+                
+                    //если первая открытая карточка уже переворачивалась до этого, то -1 балл
+                    if cards[chosenIndex].wasShown {
+                        EmojiMemoryGame.currentTheme.score -= 1
+                    }
+                    //если вторая открытая карточка уже переворачивалась до этого, то -1 балл
+                    if cards[potentialMatchIndex].wasShown {
+                        EmojiMemoryGame.currentTheme.score -= 1
+                    }
                 }
+                cards[chosenIndex].wasShown = true             //этак карточка переворачивалась
+                cards[potentialMatchIndex].wasShown = true     //этак карточка переворачивалась
+                
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
                 for index in cards.indices {
@@ -32,10 +48,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
+            
             cards[chosenIndex].isFaceUp.toggle()
         }
-        
-        //print("chosenCard = \(cards)")
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
@@ -44,9 +59,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         // add numberOfPairsOfCards x 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
-            cards.append(Card(content: content, id: pairIndex*2))
-            cards.append(Card(content: content, id: pairIndex*2+1))
+            cards.append(Card(content: content, id: pairIndex * 2))
+            cards.append(Card(content: content, id: pairIndex * 2 + 1))
         }
+        cards = cards.shuffled()
     }
     
     struct Card: Identifiable {
@@ -54,6 +70,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched: Bool = false
         var content: CardContent
         var id: Int
+        var wasShown: Bool = false
     }
     
     struct Theme {
@@ -61,5 +78,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var emojiKit: Array<String>
         var numberOfPairs: Int
         var color: Color
+        var score: Int //
     }
 }
