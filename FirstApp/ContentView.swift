@@ -48,7 +48,7 @@ struct ContentView : View {
             }
         }
         .padding(.all)
-        .foregroundColor(EmojiMemoryGame.currentTheme.color)
+        .foregroundColor(EmojiMemoryGame.currentTheme.color.first)
     }
 }
 
@@ -66,7 +66,7 @@ struct CardView : View {
             } else if card.isMatched {
                 shape.opacity(0)
             } else {
-                shape.fill()
+                shape.fill(Gradient(colors: EmojiMemoryGame.currentTheme.color))
             }
         }
     }

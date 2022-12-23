@@ -11,13 +11,13 @@ import SwiftUI
 struct Theme {
     var name: String
     var emojiKit: [String]
-    var color: Color
+    var color: [Color]
     private(set) var numberOfPairs: Int
     
     init(name: String,
          emojiKit: [String],
          numberOfPairs: Int? = nil,
-         color: Color,
+         color: [Color],
          isRandomNumberOfPairs: Bool = false) {
         self.name = name
         self.emojiKit = emojiKit
