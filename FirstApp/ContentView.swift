@@ -12,11 +12,13 @@ struct ContentView : View {
     
     var body : some View {
         VStack {
-            Text(EmojiMemoryGame.currentTheme.name).font(.largeTitle).fontWeight(.black)
+            Text(EmojiMemoryGame.currentTheme.name)
+                .font(.largeTitle)
+                .fontWeight(.black)
+            
             Text("Score: \(viewModel.score)")
                 .font(.title2)
                 
-            
             let items = [GridItem(.adaptive(minimum: 90))]
             
             ScrollView {
@@ -30,6 +32,7 @@ struct ContentView : View {
                     }
                 }
             }
+            
             VStack {
                 Button(action: {
                     viewModel.startNewGame()

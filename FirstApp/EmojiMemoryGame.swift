@@ -11,18 +11,17 @@ import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     
-    static var allThems: Array<MemoryGame<String>.Theme> = [DefaultThemes.animals,
-                                                            DefaultThemes.moons,
-                                                            DefaultThemes.hearts,
-                                                            DefaultThemes.clouds,
-                                                            DefaultThemes.fruits,
-                                                            DefaultThemes.zodiac
-    ]
+    static var allThems = [DefaultThemes.animals,
+                           DefaultThemes.moons,
+                           DefaultThemes.hearts,
+                           DefaultThemes.clouds,
+                           DefaultThemes.fruits,
+                           DefaultThemes.zodiac]
     
     static var currentTheme = allThems.randomElement()!
     
-    static func makeArrayUnique(_ array: Array<String>) -> Array<String> {
-        var localArray = Array<String>()
+    static func makeArrayUnique(_ array: [String]) -> [String] {
+        var localArray = [String]()
         for element in array {
             if !localArray.contains(element) {
                 localArray.append(element)
@@ -33,9 +32,7 @@ class EmojiMemoryGame: ObservableObject {
     
     static func createMemoryGame() -> MemoryGame<String> {
         currentTheme.emojiKit = makeArrayUnique(currentTheme.emojiKit.shuffled())
-        if currentTheme.numberOfPairs > currentTheme.emojiKit.count {
-            currentTheme.numberOfPairs = currentTheme.emojiKit.count
-        }
+
         return MemoryGame<String>(numberOfPairsOfCards: currentTheme.numberOfPairs)
         { pairIndex in
             currentTheme.emojiKit[pairIndex]

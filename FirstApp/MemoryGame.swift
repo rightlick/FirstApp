@@ -8,10 +8,9 @@
 // Model?
 
 import Foundation
-import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    private(set) var cards: Array<Card>
+    private(set) var cards: [Card]
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
@@ -57,7 +56,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         
-        cards = Array<Card>()
+        cards = [Card]()
         // add numberOfPairsOfCards x 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
@@ -73,12 +72,5 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var content: CardContent
         var id: Int
         var wasShown: Bool = false
-    }
-    
-    struct Theme {
-        var name: String
-        var emojiKit: Array<String>
-        var numberOfPairs: Int
-        var color: Color
     }
 }
