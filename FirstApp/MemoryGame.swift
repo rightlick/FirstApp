@@ -16,7 +16,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     var score: Int = 0
     
+    private var firstCardChosen: Date?
+    
     mutating func choose(_ card: Card) {
+        if firstCardChosen == nil {
+            firstCardChosen = Date()
+        }
+        
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}),
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
@@ -25,9 +31,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 
                                 //если контент на двух карточках совпал
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                    let secondCardChosen = Date()
+                    let timeInterval = firstCardChosen?.distance(to: secondCardChosen)
+                    
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
-                    score += 2
+                    score += 2 * max((10 - Int(timeInterval!)), 1)
                 } else {        //если контент на двух карточках не совпал
                 
                     //если первая открытая карточка уже переворачивалась до этого, то -1 балл
@@ -39,8 +48,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                         score -= 1
                     }
                 }
-                cards[chosenIndex].wasShown = true             //этак карточка переворачивалась
-                cards[potentialMatchIndex].wasShown = true     //этак карточка переворачивалась
+                firstCardChosen = nil
+                cards[chosenIndex].wasShown = true             //эта карточка переворачивалась
+                cards[potentialMatchIndex].wasShown = true     //эта карточка переворачивалась
                 
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
