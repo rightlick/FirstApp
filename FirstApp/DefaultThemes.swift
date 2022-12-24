@@ -9,33 +9,28 @@ import Foundation
 
 struct DefaultThemes {
     
-     static var moons = MemoryGame<String>.Theme(name: "Phases of Moon",
-                                                emojiKit: ThemeContent.phasesOfMoon,
-                                                numberOfPairs: 8,
-                                                color: .black)
+    static var moons = Theme(name: "Phases of Moon",
+                             emojiKit: ThemeContent.phasesOfMoon,
+                             color: [.black, .red],
+                             isRandomNumberOfPairs: true)
     
-    static var hearts = MemoryGame<String>.Theme(name: "Hearts",
-                                                 emojiKit: ThemeContent.hearts,
-                                                 numberOfPairs: 8,
-                                                 color: .pink)
+    static var hearts = Theme(name: "Hearts",
+                              emojiKit: ThemeContent.hearts,
+                              color: [.pink])
     
-    static var animals = MemoryGame<String>.Theme(name: "Animals",
-                                                  emojiKit: ThemeContent.animals,
-                                                  numberOfPairs: 3,
-                                                  color: .yellow)
+    static var animals = Theme(name: "Animals",
+                               emojiKit: ThemeContent.animals,
+                               color: [.yellow])
     
-    static var clouds = MemoryGame<String>.Theme(name: "Clouds",
-                                                 emojiKit: ThemeContent.clouds,
-                                                 numberOfPairs: 8,
-                                                 color: .gray)
+    static var clouds = Theme(name: "Clouds",
+                              emojiKit: ThemeContent.clouds,
+                              color: [.gray])
     
-    static var fruits = MemoryGame<String>.Theme(name: "Fruits",
-                                                 emojiKit: ThemeContent.fruits,
-                                                 numberOfPairs: 8,
-                                                 color: .green)
+    static var fruits = Theme(name: "Fruits",
+                              emojiKit: ThemeContent.fruits,
+                              color: [.green])
     
-    static var zodiac = MemoryGame<String>.Theme(name: "Zodiac Signs",
-                                                 emojiKit: ThemeContent.zodiacSigns,
-                                                 numberOfPairs: 8,
-                                                 color: .purple)
+    static var zodiac = Theme(name: "Zodiac Signs",
+                              emojiKit: ThemeContent.zodiacSigns,
+                              color: [.purple, .yellow])
 }

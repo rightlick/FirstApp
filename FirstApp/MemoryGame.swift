@@ -8,16 +8,21 @@
 // Model?
 
 import Foundation
-import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    private(set) var cards: Array<Card>
+    private(set) var cards: [Card]
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
     var score: Int = 0
     
+    private var firstCardChosen: Date?
+    
     mutating func choose(_ card: Card) {
+        if firstCardChosen == nil {
+            firstCardChosen = Date()
+        }
+        
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}),
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
@@ -26,9 +31,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 
                                 //если контент на двух карточках совпал
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                    let secondCardChosen = Date()
+                    let timeInterval = firstCardChosen?.distance(to: secondCardChosen)
+                    
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
-                    score += 2
+                    score += 2 * max((10 - Int(timeInterval!)), 1)
                 } else {        //если контент на двух карточках не совпал
                 
                     //если первая открытая карточка уже переворачивалась до этого, то -1 балл
@@ -40,8 +48,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                         score -= 1
                     }
                 }
-                cards[chosenIndex].wasShown = true             //этак карточка переворачивалась
-                cards[potentialMatchIndex].wasShown = true     //этак карточка переворачивалась
+                firstCardChosen = nil
+                cards[chosenIndex].wasShown = true             //эта карточка переворачивалась
+                cards[potentialMatchIndex].wasShown = true     //эта карточка переворачивалась
                 
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
@@ -57,7 +66,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         
-        cards = Array<Card>()
+        cards = [Card]()
         // add numberOfPairsOfCards x 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
@@ -73,12 +82,5 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var content: CardContent
         var id: Int
         var wasShown: Bool = false
-    }
-    
-    struct Theme {
-        var name: String
-        var emojiKit: Array<String>
-        var numberOfPairs: Int
-        var color: Color
     }
 }

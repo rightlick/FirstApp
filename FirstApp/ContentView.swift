@@ -8,28 +8,39 @@
 import SwiftUI
 
 struct ContentView : View {
+    enum Constans {
+        static let minimumCardWidth: CGFloat = 90
+        static let cardSpacing: CGFloat = 10
+        static let cardAspectRatio: CGFloat = 2/3
+    }
+    
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body : some View {
         VStack {
-            Text(EmojiMemoryGame.currentTheme.name).font(.largeTitle).fontWeight(.black)
-            Text("Score: \(viewModel.score)")
-                .font(.title2)
+            VStack {
+                Text(EmojiMemoryGame.currentTheme.name)
+                    .font(.largeTitle)
+                    .fontWeight(.black)
                 
-            
-            let items = [GridItem(.adaptive(minimum: 90))]
+                Text("Score: \(viewModel.score)")
+                    .font(.title2)
+            }.foregroundColor(EmojiMemoryGame.currentTheme.color.first)
+                
+            let items = [GridItem(.adaptive(minimum: Constans.minimumCardWidth))]
             
             ScrollView {
-                LazyVGrid(columns: items, spacing: 10) {
+                LazyVGrid(columns: items, spacing: Constans.cardSpacing) {
                     ForEach(viewModel.cards) { card in
                         CardView(card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
+                            .aspectRatio(Constans.cardAspectRatio, contentMode: .fit)
                             .onTapGesture {
                                 viewModel.choose(card)
                             }
                     }
                 }
             }
+            
             VStack {
                 Button(action: {
                     viewModel.startNewGame()
@@ -43,27 +54,33 @@ struct ContentView : View {
                     }
                 }).font(.largeTitle)
             }
+            .foregroundColor(EmojiMemoryGame.currentTheme.color.last)
         }
         .padding(.all)
-        .foregroundColor(EmojiMemoryGame.currentTheme.color)
+        .background(Color.mainColor)
     }
 }
 
 struct CardView : View {
+    enum Constans {
+        static let cornerRadius: CGFloat = 15
+        static let strokeBorder: CGFloat = 5
+        static let opacity: CGFloat = 0
+    }
     let card : MemoryGame<String>.Card
     
     var body : some View {
         ZStack {
-            let shape = RoundedRectangle(cornerRadius: 15)
+            let shape = RoundedRectangle(cornerRadius: Constans.cornerRadius)
             if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 5)
+                shape.fill().foregroundColor(.mainColor)
+                shape.strokeBorder(lineWidth: Constans.strokeBorder)
                 
                 Text(card.content).font(.largeTitle)
             } else if card.isMatched {
-                shape.opacity(0)
+                shape.opacity(Constans.opacity)
             } else {
-                shape.fill()
+                shape.fill(Gradient(colors: EmojiMemoryGame.currentTheme.color))
             }
         }
     }
