@@ -16,19 +16,19 @@ struct DefaultThemes {
     
     static var hearts = Theme(name: "Hearts",
                               emojiKit: ThemeContent.hearts,
-                              color: [.pink])
+                              color: [.pink, .purple])
     
     static var animals = Theme(name: "Animals",
                                emojiKit: ThemeContent.animals,
-                               color: [.yellow])
+                               color: [.yellow, .orange])
     
     static var clouds = Theme(name: "Clouds",
                               emojiKit: ThemeContent.clouds,
-                              color: [.gray])
+                              color: [.gray, .blue])
     
     static var fruits = Theme(name: "Fruits",
                               emojiKit: ThemeContent.fruits,
-                              color: [.green])
+                              color: [.green, .pink])
     
     static var zodiac = Theme(name: "Zodiac Signs",
                               emojiKit: ThemeContent.zodiacSigns,
