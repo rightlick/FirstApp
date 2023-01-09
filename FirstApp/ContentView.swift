@@ -37,7 +37,7 @@ struct ContentView : View {
                             game.choose(card)
                         }
                 }
-            }
+            }.padding(4)
             
             VStack {
                 Button(action: {
@@ -45,7 +45,7 @@ struct ContentView : View {
                 }, label: {
                     VStack {
                         Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
-                        
+
                         Text("New Game")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -70,10 +70,12 @@ struct CardView : View {
         
         static let opaciryOfPie: CGFloat = 0.4
         static let paddingOfPie: CGFloat = 4
+        
+        static let fontSize: CGFloat = 64
     }
     
-    private func font(in size: CGSize) -> Font {
-        Font.system(size: min(size.width, size.height) * Constans.fontScale)
+    private func scale(thatFits size: CGSize) -> CGFloat {
+        min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
     }
     
     let card : MemoryGame<String>.Card
@@ -82,21 +84,17 @@ struct CardView : View {
     var body : some View {
         GeometryReader { geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: Constans.cornerRadius)
-                if card.isFaceUp {
-                    shape.fill().foregroundColor(.mainColor)
-                    shape.stroke(Gradient(colors: EmojiMemoryGame.currentTheme.color), lineWidth: Constans.strokeBorder)
-                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90))
-                        .padding(Constans.paddingOfPie)
-                        .opacity(Constans.opaciryOfPie)
-                        .foregroundColor(.green /*EmojiMemoryGame.currentTheme.color.last*/)
-                    Text(card.content).font(font(in: geometry.size))
-                } else if card.isMatched {
-                    shape.opacity(Constans.opacity)
-                } else {
-                    shape.fill(Gradient(colors: EmojiMemoryGame.currentTheme.color))
-                }
+                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90))
+                    .padding(Constans.paddingOfPie)
+                    .opacity(Constans.opaciryOfPie)
+                    .foregroundColor(.green)
+                Text(card.content)
+                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
+                    .animation(Animation.linear(duration: 1))
+                    .font(Font.system(size: Constans.fontSize))
+                    .scaleEffect(scale(thatFits: geometry.size))
             }
+            .cardify(isFaceUp: card.isFaceUp, colors: EmojiMemoryGame.currentTheme.color) 
         }
     }
 }
