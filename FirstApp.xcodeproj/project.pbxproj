@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6E08B5972944FB4400D6F85D /* ThemeContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E08B5962944FB4400D6F85D /* ThemeContent.swift */; };
 		6E08B5992945059600D6F85D /* DefaultThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E08B5982945059600D6F85D /* DefaultThemes.swift */; };
+		6E1D5C9F296C114E006492E8 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1D5C9E296C114E006492E8 /* Cardify.swift */; };
 		6E25F128293B9EE700AF25D4 /* FirstAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25F127293B9EE700AF25D4 /* FirstAppApp.swift */; };
 		6E25F12A293B9EE700AF25D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25F129293B9EE700AF25D4 /* ContentView.swift */; };
 		6E25F12C293B9EE800AF25D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E25F12B293B9EE800AF25D4 /* Assets.xcassets */; };
@@ -17,11 +18,14 @@
 		6E41312929420DFB00A589B4 /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E41312829420DFB00A589B4 /* EmojiMemoryGame.swift */; };
 		6EF8F6B929562B7100FBAAAD /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8F6B829562B7100FBAAAD /* Theme.swift */; };
 		6EF8F6BB2956475100FBAAAD /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8F6BA2956475100FBAAAD /* Color+Extension.swift */; };
+		6EF8F6BD295FC76600FBAAAD /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8F6BC295FC76600FBAAAD /* AspectVGrid.swift */; };
+		6EF8F6C1295FE39E00FBAAAD /* ShapePie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8F6C0295FE39E00FBAAAD /* ShapePie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6E08B5962944FB4400D6F85D /* ThemeContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeContent.swift; sourceTree = "<group>"; };
 		6E08B5982945059600D6F85D /* DefaultThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultThemes.swift; sourceTree = "<group>"; };
+		6E1D5C9E296C114E006492E8 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		6E25F124293B9EE700AF25D4 /* FirstApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E25F127293B9EE700AF25D4 /* FirstAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppApp.swift; sourceTree = "<group>"; };
 		6E25F129293B9EE700AF25D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -31,6 +35,8 @@
 		6E41312829420DFB00A589B4 /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 		6EF8F6B829562B7100FBAAAD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		6EF8F6BA2956475100FBAAAD /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		6EF8F6BC295FC76600FBAAAD /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		6EF8F6C0295FE39E00FBAAAD /* ShapePie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapePie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,9 @@
 				6E4131262942071C00A589B4 /* MemoryGame.swift */,
 				6E41312829420DFB00A589B4 /* EmojiMemoryGame.swift */,
 				6E25F129293B9EE700AF25D4 /* ContentView.swift */,
+				6E1D5C9E296C114E006492E8 /* Cardify.swift */,
+				6EF8F6C0295FE39E00FBAAAD /* ShapePie.swift */,
+				6EF8F6BC295FC76600FBAAAD /* AspectVGrid.swift */,
 				6EF8F6BA2956475100FBAAAD /* Color+Extension.swift */,
 				6E25F127293B9EE700AF25D4 /* FirstAppApp.swift */,
 				6E08B5962944FB4400D6F85D /* ThemeContent.swift */,
@@ -155,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E1D5C9F296C114E006492E8 /* Cardify.swift in Sources */,
 				6E4131272942071C00A589B4 /* MemoryGame.swift in Sources */,
 				6E08B5992945059600D6F85D /* DefaultThemes.swift in Sources */,
 				6E25F12A293B9EE700AF25D4 /* ContentView.swift in Sources */,
@@ -163,6 +173,8 @@
 				6E41312929420DFB00A589B4 /* EmojiMemoryGame.swift in Sources */,
 				6EF8F6B929562B7100FBAAAD /* Theme.swift in Sources */,
 				6EF8F6BB2956475100FBAAAD /* Color+Extension.swift in Sources */,
+				6EF8F6C1295FE39E00FBAAAD /* ShapePie.swift in Sources */,
+				6EF8F6BD295FC76600FBAAAD /* AspectVGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +311,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -328,6 +341,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
