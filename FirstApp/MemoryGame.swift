@@ -121,7 +121,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
         
         var bonusRemaning: Double {
-            (bonusTimeLimit > 0 && bonusTimeLimit > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
+            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
         }
         
         var hasEarnedBonus: Bool {

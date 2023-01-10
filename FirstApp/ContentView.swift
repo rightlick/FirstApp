@@ -172,13 +172,28 @@ struct CardView : View {
         min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
     }
     
+    @State private var animatedBonusRemaining: Double = 0
+    
     var body : some View {
         GeometryReader { geometry in
             ZStack {
-                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90))
-                    .padding(Constans.paddingOfPie)
-                    .opacity(Constans.opaciryOfPie)
-                    .foregroundColor(.green)
+                Group {
+                    if card.isConsumingBonusTime {
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (1 - animatedBonusRemaining) * 360 - 90))
+                            .onAppear {
+                                animatedBonusRemaining = card.bonusRemaning
+                                withAnimation(.linear(duration: card.bonusTimeRemaining)) {
+                                    animatedBonusRemaining = 0
+                                }
+                            }
+                    } else if (card.bonusRemaning > 0) {
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (1 - card.bonusRemaning) * 360 - 90))
+                    }
+                }
+                .padding(Constans.paddingOfPie)
+                .opacity(Constans.opaciryOfPie)
+                .foregroundColor(.green)
+                
                 Text(card.content)
                 
                     .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
