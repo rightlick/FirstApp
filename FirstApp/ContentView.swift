@@ -110,7 +110,7 @@ struct ContentView : View {
         .onTapGesture {
             // "deal" cards
             for card in game.cards {
-                withAnimation(dealAnimation(for: card)) {
+                withAnimation(dealAnimation(for: card).speed(3)) {
                     deal(card)
                 }
             }
@@ -179,16 +179,15 @@ struct CardView : View {
             ZStack {
                 Group {
                     if card.isConsumingBonusTime {
-                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: abs(1 - animatedBonusRemaining) * 360 - 90))
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (0 - animatedBonusRemaining) * 360 - 90))
                             .onAppear {
                                 animatedBonusRemaining = card.bonusRemaning
                                 withAnimation(.linear(duration: card.bonusTimeRemaining)) {
                                     animatedBonusRemaining = 0
                                 }
                             }
-                        
                     } else {
-                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (1 - card.bonusRemaning) * 360 - 90))
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (0 - card.bonusRemaning) * 360 - 90))
                     }
                 }
                 .padding(Constans.paddingOfPie)

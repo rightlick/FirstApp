@@ -102,7 +102,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
         // MARK: - Bonus Time
         
-        var bonusTimeLimit: TimeInterval = 2
+        var bonusTimeLimit: TimeInterval = 10
         
         private var faceUpTime: TimeInterval {
             if let lastFaceUpDate = self.lastFaceUpDate {
@@ -116,12 +116,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
         var pastFaceUpTime: TimeInterval = 0
         
+//      Это либо 0, либо ТаймЛимит - время, которое карточка лежала вверх лицом
         var bonusTimeRemaining: TimeInterval {
             max(0, bonusTimeLimit - faceUpTime)
         }
         
+//      Это дробь - нынешний кусок пирога по форме как х/10, которую съели от целой части
         var bonusRemaning: Double {
-            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
+            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining / bonusTimeLimit : 0
         }
         
         var hasEarnedBonus: Bool {
