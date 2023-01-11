@@ -102,7 +102,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
         // MARK: - Bonus Time
         
-        var bonusTimeLimit: TimeInterval = 10
+        var bonusTimeLimit: TimeInterval = 2
         
         private var faceUpTime: TimeInterval {
             if let lastFaceUpDate = self.lastFaceUpDate {
