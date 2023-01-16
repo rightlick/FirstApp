@@ -169,8 +169,6 @@ struct CardView : View {
     let card : MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
-    @State var emojiAnimationAngle: Double = 0
-    @State var emojiAnimation = Animation.linear(duration: 1).repeatForever(autoreverses: false)
     
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
@@ -201,29 +199,9 @@ struct CardView : View {
                 
                 
                 Text(card.content)
-                    .onAppear {
-                        self.emojiAnimationAngle = 0
-                        self.emojiAnimation = Animation.linear(duration: 0)
-                    }
-                    .onTapGesture {
-                        if card.isMatched {
-                            if self.emojiAnimationAngle == 0 {
-                                self.emojiAnimationAngle = 360
-                                self.emojiAnimation = Animation.linear(duration: 1).repeatForever(autoreverses: false)
-                            } else {
-                                self.emojiAnimationAngle = 0
-                                self.emojiAnimation = Animation.linear(duration: 0)
-                            }
-                        }
-                    }
-//                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
-//                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
-                    .rotationEffect(Angle(degrees: emojiAnimationAngle ))
-                    .animation(emojiAnimation)
-                    .onDisappear {
-                        self.emojiAnimationAngle = 0
-                        self.emojiAnimation = Animation.linear(duration: 0)
-                    }
+                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
+                    .animation(Animation.linear(duration: 1))
+
                     .font(Font.system(size: Constans.fontSize))
                     .scaleEffect(scale(thatFits: geometry.size))
             }
