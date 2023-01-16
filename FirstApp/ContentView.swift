@@ -168,13 +168,17 @@ struct CardView : View {
     
     let card : MemoryGame<String>.Card
     
+    @State private var animatedBonusRemaining: Double = 0
+    @State var emojiAnimationAngle: Double = 0
+    @State var emojiAnimation = Animation.linear(duration: 1).repeatForever(autoreverses: false)
+    
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
     }
     
-    @State private var animatedBonusRemaining: Double = 0
-    
     var body : some View {
+
+        
         GeometryReader { geometry in
             ZStack {
                 Group {
@@ -194,11 +198,32 @@ struct CardView : View {
                 .opacity(Constans.opaciryOfPie)
                 .foregroundColor(.green)
                 
+                
+                
                 Text(card.content)
-                
-                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
-                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
-                
+                    .onAppear {
+                        self.emojiAnimationAngle = 0
+                        self.emojiAnimation = Animation.linear(duration: 0)
+                    }
+                    .onTapGesture {
+                        if card.isMatched {
+                            if self.emojiAnimationAngle == 0 {
+                                self.emojiAnimationAngle = 360
+                                self.emojiAnimation = Animation.linear(duration: 1).repeatForever(autoreverses: false)
+                            } else {
+                                self.emojiAnimationAngle = 0
+                                self.emojiAnimation = Animation.linear(duration: 0)
+                            }
+                        }
+                    }
+//                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
+//                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                    .rotationEffect(Angle(degrees: emojiAnimationAngle ))
+                    .animation(emojiAnimation)
+                    .onDisappear {
+                        self.emojiAnimationAngle = 0
+                        self.emojiAnimation = Animation.linear(duration: 0)
+                    }
                     .font(Font.system(size: Constans.fontSize))
                     .scaleEffect(scale(thatFits: geometry.size))
             }
