@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMemoryGameView.swift
 //  FirstApp
 //
 //  Created by Liza Likhomanova on 03.12.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct EmojiMemoryGameView : View {
     enum Constans {
         static let minimumCardWidth: CGFloat = 90
         static let cardSpacing: CGFloat = 10
@@ -169,14 +169,17 @@ struct CardView : View {
     let card : MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
+    @State private var animatedEmojiAngle: Double = 0
+    
+    var show: Bool {
+        return card.isMatched
+    }
     
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
     }
     
     var body : some View {
-
-        
         GeometryReader { geometry in
             ZStack {
                 Group {
@@ -196,14 +199,24 @@ struct CardView : View {
                 .opacity(Constans.opaciryOfPie)
                 .foregroundColor(.green)
                 
-                
-                
-                Text(card.content)
-                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
-                    .animation(Animation.linear(duration: 1))
+                Group {
+                    if !card.isMatched {
+                        Text(card.content)
+                            .onAppear {
+                                animatedEmojiAngle = 0
+                            }
+                    } else {
+                        Text(card.content)
+                            .onAppear {
+                                animatedEmojiAngle = 90
+                            }
+                    }
+                }
+                .rotationEffect(Angle(degrees: animatedEmojiAngle))
+                .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : nil, value: animatedEmojiAngle)
 
-                    .font(Font.system(size: Constans.fontSize))
-                    .scaleEffect(scale(thatFits: geometry.size))
+                .font(Font.system(size: Constans.fontSize))
+                .scaleEffect(scale(thatFits: geometry.size))
             }
             .cardify(isFaceUp: card.isFaceUp, colors: EmojiMemoryGame.currentTheme.color) 
         }
@@ -213,6 +226,6 @@ struct CardView : View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(game: game)
+        EmojiMemoryGameView(game: game)
     }
 }

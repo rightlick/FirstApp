@@ -17,7 +17,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
     }
     
-    var score: Int = 0
+    private(set) var score: Int = 0
+//    private var notMatchedPairs: Int
     
     mutating func choose(_ card: Card) {
         
@@ -32,6 +33,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
                     score += max(1, min(Int(cards[chosenIndex].bonusTimeRemaining), Int(cards[potentialMatchIndex].bonusTimeRemaining)))
+//                    notMatchedPairs -= 1
                 } else {        //если контент на двух карточках не совпал
                 
                     //если первая открытая карточка уже переворачивалась до этого, то -1 балл
@@ -51,14 +53,20 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
         }
+//        if notMatchedPairs == 0 {
+//            gameOver()
+//        }
     }
+    
+//    mutating func gameOver() {
+//        cards.removeAll()
+//    }
     
     mutating func shuffle() {
         cards.shuffle()
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
-        
         cards = [Card]()
         // add numberOfPairsOfCards x 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
@@ -67,6 +75,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: pairIndex * 2 + 1))
         }
         cards = cards.shuffled()
+        
+//        notMatchedPairs = numberOfPairsOfCards
     }
     
     struct Card: Identifiable {
