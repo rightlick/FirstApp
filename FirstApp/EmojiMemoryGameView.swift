@@ -170,13 +170,6 @@ struct CardView : View {
     
     @State private var animatedBonusRemaining: Double = 0
     
-    @State private var animatedEmojiAngle: Double = 0
-    
-    
-    var show: Bool {
-        return card.isMatched
-    }
-    
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (Constans.fontSize / Constans.fontScale)
     }
@@ -201,24 +194,11 @@ struct CardView : View {
                 .opacity(Constans.opaciryOfPie)
                 .foregroundColor(.green)
                 
-                Group {
-                    if !card.isMatched {
-                        Text(card.content)
-                            .onAppear {
-                                animatedEmojiAngle = 0
-                            }
-                    } else {
-                        Text(card.content)
-                            .onAppear {
-                                animatedEmojiAngle = 360
-                            }
-                    }
-                }
-                .rotationEffect(Angle(degrees: animatedEmojiAngle))
-                .animation(card.isMatched ? Animation.linear(duration: 1) : nil, value: animatedEmojiAngle)
-
-                .font(Font.system(size: Constans.fontSize))
-                .scaleEffect(scale(thatFits: geometry.size))
+                Text(card.content)
+                    .rotationEffect(Angle(degrees: card.isMatched ? 360 : 0))
+                    .animation(card.isMatched ? Animation.linear(duration: 1) : nil, value: card.isMatched)
+                    .font(Font.system(size: Constans.fontSize))
+                    .scaleEffect(scale(thatFits: geometry.size))
             }
             .cardify(isFaceUp: card.isFaceUp, colors: EmojiMemoryGame.currentTheme.color) 
         }
