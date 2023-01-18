@@ -169,7 +169,9 @@ struct CardView : View {
     let card : MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
+    
     @State private var animatedEmojiAngle: Double = 0
+    
     
     var show: Bool {
         return card.isMatched
@@ -208,12 +210,12 @@ struct CardView : View {
                     } else {
                         Text(card.content)
                             .onAppear {
-                                animatedEmojiAngle = 90
+                                animatedEmojiAngle = 360
                             }
                     }
                 }
                 .rotationEffect(Angle(degrees: animatedEmojiAngle))
-                .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : nil, value: animatedEmojiAngle)
+                .animation(card.isMatched ? Animation.linear(duration: 1) : nil, value: animatedEmojiAngle)
 
                 .font(Font.system(size: Constans.fontSize))
                 .scaleEffect(scale(thatFits: geometry.size))
